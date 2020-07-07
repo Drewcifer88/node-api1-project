@@ -50,7 +50,7 @@ When the client makes a `POST` request to `/api/users`:
 - If the request body is missing the `name` or `bio` property:
 
   - respond with HTTP status code `400` (Bad Request).
-  - return the following JSON response: `{ errorMessage: "Please provide name and bio for the user." }`.
+  - return the following JSON response: `{ errorMessage: w }`.
 
 - If the information about the _user_ is valid:
 
