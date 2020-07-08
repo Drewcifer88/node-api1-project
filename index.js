@@ -44,8 +44,8 @@ server.get("/api/users/:id", (req, res) => {
 });
 
 server.post("/api/users", (req, res) => {
-  let userInfo = req.body;
-  userInfo.id = shortid.generate;
+  const userInfo = req.body;
+  userInfo.id = shortid.generate();
   if (userInfo.bio === "" || userInfo.name === "") {
     res.status(400).json("Please provide name and bio for the user.");
   } else if (!userInfo) {
@@ -68,6 +68,30 @@ server.delete("/api/users/:id", (req, res) => {
     res.status(500).json("Error: The user information could not be removed");
   } else {
     users = users.filter((x) => x.id != id);
+    res.status(200).json(users);
+  }
+});
+
+server.patch("/api/users/:id", (req, res) => {
+  const id = req.params.id;
+  let userInfo = req.body;
+
+  let userId = users.filter((x) => x.id === id);
+  if (userId.length === 0) {
+    res.status(404).json("The user with this ID does not exist");
+  } else if (userInfo.bio === "" || userInfo.name === "") {
+    res.status(400).json("Please provide name and bio for the user");
+  } else if (!users) {
+    res.status(500).json("The user information could not be modified");
+  } else {
+    users.forEach((antiHero) => {
+      if (antiHero.id === id) {
+        antiHero.name = userInfo.name;
+        antiHero.bio = userInfo.bio;
+      } else {
+        return person;
+      }
+    });
     res.status(200).json(users);
   }
 });
